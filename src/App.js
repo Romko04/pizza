@@ -1,31 +1,37 @@
-import logo from './logo.svg';
 import './scss/app.scss'
 import './App.css';
 import Header from './components/Header';
 import Categories from './components/Categories';
+import { useEffect, useState } from 'react';
+import Sceleton from './components/Pizzablock/Sceletor';
+import Pizza from './components/Pizzablock/Pizza';
 import Sort from './components/Sort';
-import Pizza from './components/Pizza';
 
 function App() {
+  debugger
+  let [pizzas, setPizzas] = useState([])
+  let [IsSceleton, setSceleton] = useState(true)
+  console.log(IsSceleton);
+  useEffect(()=>{
+    fetch('https://6401e590ab6b7399d0af0807.mockapi.io/items')
+      .then(res => res.json())
+      .then(data => {
+        setPizzas(data)
+        setSceleton(false)
+      })
+  },[])
   return (
-     <div class="wrapper">
+     <div className="wrapper">
       <Header />
-      <div class="content">
-        <div class="container">
-          <div class="content__top">
+      <div className="content">
+        <div className="container">
+          <div className="content__top">
             <Categories />
-            <Sort/>
+            <Sort />
           </div>
-          <h2 class="content__title">Все пиццы</h2>
-          <div class="content__items">
-            <Pizza />
-            <Pizza />
-            <Pizza />
-            <Pizza />
-            <Pizza />
-            <Pizza />
-            <Pizza />
-            <Pizza />
+          <h2 className="content__title">Все пиццы</h2>
+          <div className="content__items">
+          {pizzas.map((item, i )=> !IsSceleton? <Sceleton/>:<Pizza {...item} key={i} />)}
           </div>
         </div>
       </div>

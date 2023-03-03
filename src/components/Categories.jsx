@@ -6,17 +6,11 @@ const Categories = ()=>{
     setActiveIndex(value)
   }
     return(
-      <div class="categories">
+      <div className="categories">
       <ul>
         {
-          categories.map((value,i) => <li key={i} className={activeIndex === i&& 'active'} onClick={()=>changeActive(i)}>{value}</li>)
+          categories.map((value,i) => <li key={i} className={activeIndex === i?'active':''} onClick={()=>changeActive(i)}>{value}</li>)
         }
-        {/* <li class="active">Все</li>
-        <li>Мясные</li>
-        <li>Вегетарианская</li>
-        <li>Гриль</li>
-        <li>Острые</li>
-        <li>Закрытые</li> */}
       </ul>
     </div>
     )
