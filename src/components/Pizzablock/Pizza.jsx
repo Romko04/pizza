@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/CartSlice";
 const Pizza = ({category,imageUrl,name,price,rating,sizes}) => {
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
   const categories = ['тонкое','традиционное']
-  const changeSum =()=>{
-    setSum(sum + 1)
+  const dispatch = useDispatch()
+  const changeSum =(i)=>{
+    debugger
+    setSum(sum+1)
+    const item = {
+      name,
+      imageUrl,
+      categories: categories[activeCategory],
+      price,
+      sizes: sizes[activeSize],
+      count: 1
+    }
+    dispatch(addItem(item))
   }
   return (
     <div className="pizza-block">
