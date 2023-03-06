@@ -1,10 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSort } from "../redux/HomeSlice";
 const Sort = ()=>{
   let [isOpen, setIsOpen] = useState(false)
-  let [sortActiveValue, setSortActiveValue] = useState(0)
-  let sortValues = ['популярности','цене','алфавиту']
-  const OnSortValue = (i) =>{
-    setSortActiveValue(i)
+  let [sortActiveValue, setSortActiveValue] = useState('rating')
+  const sortValues = {
+    rating: 'популярности',
+    price: 'цене',
+    asc:'алфавиту'
+  }
+
+  const dispatch = useDispatch()
+  const keys = Object.keys(sortValues)
+  const OnSortValue = (value) =>{
+    dispatch(setSort(value))
+    setSortActiveValue(value)
     setIsOpen(false)
   }
     return(
@@ -21,11 +31,12 @@ const Sort = ()=>{
       {isOpen&& (
         <div className="sort__popup">
         <ul>
-        {sortValues.map((item,i)=> {
+        {keys.map((item,i)=> {
+          debugger
            return <li
-            onClick={()=>{OnSortValue(i)}} 
+            onClick={()=>{OnSortValue(item)}} 
             className={i === sortActiveValue? 'active':''} 
-            key={i}>{item}
+            key={i}>{sortValues[item]}
             </li>
           })}
         </ul>

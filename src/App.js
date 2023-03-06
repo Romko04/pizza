@@ -8,7 +8,6 @@ import './scss/app.scss'
 // import EmtyCart from './pages/Empty-Cart';
 
 function App() {
-
   return (
     <div className="wrapper">
       <Header />

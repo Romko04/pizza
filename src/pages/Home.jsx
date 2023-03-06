@@ -3,17 +3,27 @@ import { useEffect, useState } from 'react';
 import Sceleton from '../components/Pizzablock/Sceletor';
 import Pizza from '../components/Pizzablock/Pizza';
 import Sort from '../components/Sort';
+import { useDispatch, useSelector} from 'react-redux';
+// import { store } from '../redux/store';
+import { setPizzaz } from '../redux/HomeSlice';
 const Home = () => {
-    let [pizzas, setPizzas] = useState([])
+    debugger
+    const pizzas = useSelector((state) => state.home.pizzas);
+    let category = useSelector((state) => state.home.category);                                                                                                                                                                                                                                                                                                             
+    let sort = useSelector((state) => state.home.sort);
+    const dispatch = useDispatch()
     let [IsSceleton, setSceleton] = useState(true)
     useEffect(() => {
-        fetch('https://6401e590ab6b7399d0af0807.mockapi.io/items')
+        debugger
+        setSceleton(true)
+        fetch(`https://6401e590ab6b7399d0af0807.mockapi.io/items?category=${category===0?'':category}&sortBy=${sort}`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             .then(res => res.json())
             .then(data => {
-                setPizzas(data)
+                // setPizzas(data)
+                dispatch(setPizzaz(data))
                 setSceleton(false)
             })
-    }, [])
+    }, [dispatch, category, sort])
     return (
         <>
             <div className="content__top">
