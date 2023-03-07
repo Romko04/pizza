@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/CartSlice";
-const Pizza = ({id,category,imageUrl,name,price,rating,sizes}) => {
+// console.log(pizzaPrices);
+const Pizza = ({ id, category, imageUrl, name, price, rating, sizes }) => {
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
-  const categories = ['тонкое','традиционное']
+  let {pizzaPrices} = useSelector((state)=> state.prices)
+  const categories = ['тонкое', 'традиционное']
+
   const dispatch = useDispatch()
-  const changeSum =(i)=>{
-    setSum(sum+1)
+  const changeSum = (i) => {
+    setSum(sum + 1)
     const item = {
       id,
       name,
       imageUrl,
       categories: categories[activeCategory],
-      price,
+      price: pizzaPrices[name][categories[activeCategory]][sizes[activeSize]],
       sizes: sizes[activeSize],
       count: 1
     }
@@ -28,29 +31,29 @@ const Pizza = ({id,category,imageUrl,name,price,rating,sizes}) => {
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {categories.map((item,i)=> {
-           return <li
-            onClick={()=>{setActiveCategory(i)}} 
-            className={i === activeCategory? 'active':''} 
-            key={i}>{item}
+          {categories.map((item, i) => {
+            return <li
+              onClick={() => { setActiveCategory(i) }}
+              className={i === activeCategory ? 'active' : ''}
+              key={i}>{item}
             </li>
           })}
         </ul>
         <ul>
 
           {
-            sizes.map((item,i)=>{
+            sizes.map((item, i) => {
               return <li
-            onClick={()=>{setActiveSize(i)}} 
-            className={i === activeSize? 'active':''} 
-            key={i}>{item}
-            </li>
+                onClick={() => { setActiveSize(i) }}
+                className={i === activeSize ? 'active' : ''}
+                key={i}>{item}
+              </li>
             })
           }
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{price} грн</div>
+        <div className="pizza-block__price">{pizzaPrices[name][categories[activeCategory]][sizes[activeSize]]} грн</div>
         <div onClick={changeSum} className="button button--outline button--add">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
