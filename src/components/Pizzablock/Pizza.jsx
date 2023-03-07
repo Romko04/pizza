@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addItem } from "../../redux/CartSlice";
 // console.log(pizzaPrices);
-const Pizza = ({ id, category, imageUrl, name, price, rating, sizes }) => {
+const Pizza = ({ id,prices, category, imageUrl, name, price, rating, sizes }) => {
+  debugger
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
-  let {pizzaPrices} = useSelector((state)=> state.prices)
+  // let {pizzaPrices} = useSelector((state)=> state.prices)
   const categories = ['тонкое', 'традиционное']
 
   const dispatch = useDispatch()
@@ -17,7 +18,7 @@ const Pizza = ({ id, category, imageUrl, name, price, rating, sizes }) => {
       name,
       imageUrl,
       categories: categories[activeCategory],
-      price: pizzaPrices[name][categories[activeCategory]][sizes[activeSize]],
+      price: prices[categories[activeCategory]][sizes[activeSize]],
       sizes: sizes[activeSize],
       count: 1
     }
@@ -53,7 +54,7 @@ const Pizza = ({ id, category, imageUrl, name, price, rating, sizes }) => {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{pizzaPrices[name][categories[activeCategory]][sizes[activeSize]]} грн</div>
+        <div className="pizza-block__price">{prices[categories[activeCategory]][sizes[activeSize]]} грн</div>
         <div onClick={changeSum} className="button button--outline button--add">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

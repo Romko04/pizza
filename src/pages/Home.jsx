@@ -33,17 +33,11 @@ const Home = () => {
                 setSceleton(true)
             }
             isMount.current = true
-            fetch(`https://6401e590ab6b7399d0af0807.mockapi.io/prices`)
-                .then(res => res.json())
-                .then(data => {
-                    // setPizzas(data)
-                    console.log(data);
-
-                })
             fetch(`https://6401e590ab6b7399d0af0807.mockapi.io/items?category=${category === 0 ? '' : category}&sortBy=${sort}`)
                 .then(res => res.json())
                 .then(data => {
                     // setPizzas(data)
+                    debugger
                     dispatch(setPizzaz(data))
                     setSceleton(false)
                 })
