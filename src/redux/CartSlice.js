@@ -9,25 +9,62 @@ const cartSlice = createSlice({
     },
     reducers: {
         addItem: (state, action) => {
-            debugger
             let isItem = state.items.find(item => {
-                return item.name === action.payload.name && item.categories === action.payload.categories && item.sizes===action.payload.sizes
+                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes===action.payload.sizes
             })
             if (isItem) {
-                debugger
                 isItem.count++
                 state.count++
-                state.totalPrice = state.totalPrice + (isItem.count * isItem.price)           
+                state.totalPrice = state.totalPrice + isItem.price      
             } else {
                 state.items.push(action.payload)
-                state.totalPrice = state.items.reduce((sum, obj)=>{
-                    return sum + obj.price
-                }, 0)
+                state.totalPrice = state.totalPrice + action.payload.price    
                 state.count++
             }
             
-        }
+        },
+        plusItem:(state, action) => {
+            let isItem = state.items.find(item => {
+                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes===action.payload.sizes
+            })
+            if (isItem) {
+                isItem.count++
+                state.count++
+                state.totalPrice = state.totalPrice + isItem.price       
+            } 
+            
+        },
+        minusItem:(state, action) => {
+            let isItem = state.items.find(item => {
+                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes===action.payload.sizes
+            })
+            if (isItem) {
+                isItem.count--
+                state.count--
+                state.totalPrice = state.totalPrice - isItem.price          
+            } 
+            
+        },
+        clearItems:(state) => {
+            state.items = []
+            state.count = 0
+            state.totalPrice = 0
+        },
+        removeItem:(state, action) => {
+            let isItem = state.items.find(item => {
+                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes===action.payload.sizes
+            })
+            if (isItem) {
+                state.count= state.count - isItem.count
+                state.totalPrice = state.totalPrice - (isItem.price *isItem.count)         
+            } 
+            state.items = state.items.filter(item => {
+                debugger
+                return item.id !== action.payload.id || item.categories !== action.payload.categories || item.sizes!==action.payload.sizes
+            })
+        },
+        
     }
 })
-export const {addItem} = cartSlice.actions
+export const {addItem,plusItem,minusItem,clearItems,removeItem} = cartSlice.actions
 export default cartSlice.reducer

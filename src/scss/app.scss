@@ -277,6 +277,8 @@ body {
       align-items: center;
       justify-content: flex-end;
       width: 4%;
+      border: none;
+    background: transparent;
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);

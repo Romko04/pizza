@@ -4,6 +4,7 @@ const homeSlice = createSlice({
     name: 'homeSlice',
     initialState: {
         pizzas: [],
+        
         category: 0,
         sort: 'rating',
         searchValue: ''
