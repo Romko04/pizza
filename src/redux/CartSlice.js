@@ -15,10 +15,10 @@ const cartSlice = createSlice({
             if (isItem) {
                 isItem.count++
                 state.count++
-                state.totalPrice = state.totalPrice + isItem.price      
+                state.totalPrice += isItem.price      
             } else {
                 state.items.push(action.payload)
-                state.totalPrice = state.totalPrice + action.payload.price    
+                state.totalPrice += action.payload.price    
                 state.count++
             }
             
@@ -30,7 +30,7 @@ const cartSlice = createSlice({
             if (isItem) {
                 isItem.count++
                 state.count++
-                state.totalPrice = state.totalPrice + isItem.price       
+                state.totalPrice += isItem.price       
             } 
             
         },
@@ -41,7 +41,7 @@ const cartSlice = createSlice({
             if (isItem) {
                 isItem.count--
                 state.count--
-                state.totalPrice = state.totalPrice - isItem.price          
+                state.totalPrice -= isItem.price          
             } 
             
         },
@@ -55,16 +55,16 @@ const cartSlice = createSlice({
                 return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes===action.payload.sizes
             })
             if (isItem) {
-                state.count= state.count - isItem.count
-                state.totalPrice = state.totalPrice - (isItem.price *isItem.count)         
+                state.count -= isItem.count
+                state.totalPrice -= (isItem.price *isItem.count)         
             } 
             state.items = state.items.filter(item => {
-                debugger
                 return item.id !== action.payload.id || item.categories !== action.payload.categories || item.sizes!==action.payload.sizes
             })
         },
         
     }
 })
+export const selectCart = (state)=> state.cart
 export const {addItem,plusItem,minusItem,clearItems,removeItem} = cartSlice.actions
 export default cartSlice.reducer

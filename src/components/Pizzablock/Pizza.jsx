@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch} from "react-redux";
 import { addItem } from "../../redux/CartSlice";
-// console.log(pizzaPrices);
 const Pizza = ({ id,prices, category, imageUrl, name, price, rating, sizes }) => {
-  debugger
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
-  // let {pizzaPrices} = useSelector((state)=> state.prices)
   const categories = ['тонкое', 'традиционное']
 
   const dispatch = useDispatch()

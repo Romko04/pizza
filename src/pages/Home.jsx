@@ -1,49 +1,42 @@
 import Categories from '../components/Categories';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Sceleton from '../components/Pizzablock/Sceletor';
 import Pizza from '../components/Pizzablock/Pizza';
+// import axios from "axios";
 import Sort from '../components/Sort';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
-import { setDescription, setPizzaz } from '../redux/HomeSlice';
+import { fetchPizzas, selectHome, setDescription } from '../redux/HomeSlice';
 import { useNavigate } from 'react-router-dom';
 const Home = () => {
+
     const navigate = useNavigate()
     let isMount = useRef(false)
     let isSearch = useRef(false)
-    const {pizzas,category,sort} = useSelector((state) => state.home);
-    let searchValue = useSelector((state) => state.home.searchValue);
+    const { pizzas, category, activeSort, loading, status, searchValue } = useSelector(selectHome);
     const dispatch = useDispatch()
-    let [IsSceleton, setSceleton] = useState(true)
-    useEffect(()=>{
+    useEffect(() => {
         if (window.location.search) {
             const params = qs.parse(window.location.search.substring(1))
-            dispatch(setDescription({...params}))
+            dispatch(setDescription({ ...params }))
             isSearch.current = true
         }
-    },[dispatch])
+    }, [dispatch])
     useEffect(() => {
         if (!isSearch.current) {
             if (isMount.current) {
                 const queryString = qs.stringify({
                     category,
-                    sort
+                    activeSort
                 })
                 navigate(`?${queryString}`)
-                setSceleton(true)
+                // setSceleton(true)
             }
             isMount.current = true
-            fetch(`https://6401e590ab6b7399d0af0807.mockapi.io/items?category=${category === 0 ? '' : category}&sortBy=${sort}`)
-                .then(res => res.json())
-                .then(data => {
-                    // setPizzas(data)
-                    debugger
-                    dispatch(setPizzaz(data))
-                    setSceleton(false)
-                })
         }
         isSearch.current = false
-    }, [navigate,dispatch, category, sort, searchValue])
+        dispatch(fetchPizzas([category, activeSort]))
+    }, [navigate, dispatch, category, activeSort, searchValue])
     return (
         <>
             <div className="content__top">
@@ -51,12 +44,19 @@ const Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {IsSceleton
-                    ? [...new Array(6)].map((_, i) => <Sceleton key={i} />)
-                    : pizzas.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-                        .map((item, i) => <Pizza {...item} key={i} />)
+            <div className={status === "error"?"content__error-info":"content__items"}>
+                {status === "error"
+                    ?<div className='error'>
+                        <h2>Виникла помилка при завантаженні піц</h2>
+                        <p>Попробуйте пізніше</p>
+                    </div>
+                    : loading
+                        ? [...new Array(6)].map((_, i) => <Sceleton key={i} />)
+                        : pizzas.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+                            .map((item, i) => <Pizza {...item} key={i} />)
                 }
+
+
             </div>
         </>
     )
