@@ -5,9 +5,10 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import { Routes, Route } from "react-router-dom";
 import './scss/app.scss'
+import React from 'react';
 // import EmtyCart from './pages/Empty-Cart';
 
-function App() {
+const App: React.FC =()=> {
   return (
     <div className="wrapper">
       <Header />

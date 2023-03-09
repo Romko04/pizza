@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHome, setSort } from "../redux/HomeSlice";
-const Sort = ()=>{
+const Sort: React.FC = ()=>{
   let [isOpen, setIsOpen] = useState(false)
   let {activeSort} = useSelector(selectHome);
-  const sortValues = {
+  type sortValue = {[key: string]: string}
+  const sortValues: sortValue = {
     rating: 'популярности',
     price: 'цене',
     asc:'алфавиту'
@@ -12,7 +13,7 @@ const Sort = ()=>{
 
   const dispatch = useDispatch()
   const keys = Object.keys(sortValues)
-  const OnSortValue = (value) =>{
+  const OnSortValue = (value: string) =>{
     dispatch(setSort(value))
     setIsOpen(false)
   }

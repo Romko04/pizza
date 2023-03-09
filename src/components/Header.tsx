@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from '../assets/img/pizza-logo.svg'
 import { selectCart } from "../redux/CartSlice";
 import Search from "./Search/Search";
-const Header = ()=>{
+const Header: React.FC = ()=>{
   let {count, totalPrice} = useSelector(selectCart)
     return(
         <div className="header">

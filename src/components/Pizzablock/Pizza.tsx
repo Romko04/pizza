@@ -1,14 +1,21 @@
+import { type } from "os";
 import React, { useState } from "react";
 import { useDispatch} from "react-redux";
 import { addItem } from "../../redux/CartSlice";
-const Pizza = ({ id,prices, category, imageUrl, name, price, rating, sizes }) => {
+type Prices = {
+  [categorie: string]: {
+    [size:string]: number
+  }
+}
+type PizzaProps = {id: number,prices: Prices, imageUrl:string, name:string, sizes: number[] }
+const Pizza: React.FC<PizzaProps> = ({ id,prices, imageUrl, name, sizes }) => {
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
-  const categories = ['тонкое', 'традиционное']
+  const categories: string[] = ['тонкое', 'традиционное']
 
   const dispatch = useDispatch()
-  const changeSum = (i) => {
+  const changeSum = (i: any) => {
     setSum(sum + 1)
     const item = {
       id,
@@ -40,7 +47,7 @@ const Pizza = ({ id,prices, category, imageUrl, name, price, rating, sizes }) =>
         <ul>
 
           {
-            sizes.map((item, i) => {
+            sizes.map((item: any, i:number) => {
               return <li
                 onClick={() => { setActiveSize(i) }}
                 className={i === activeSize ? 'active' : ''}

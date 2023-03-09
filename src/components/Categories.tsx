@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHome, setCategory } from "../redux/HomeSlice";
-const Categories = ()=>{
+const Categories: React.FC = ()=>{
   let activeIndex = useSelector(selectHome).category;
   let categories = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые',]
   const dispatch = useDispatch()
-  const changeCategory = (value)=>{
+  const changeCategory = (value: number)=>{
     dispatch(setCategory(value))
   }
     return(

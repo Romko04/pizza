@@ -27,7 +27,7 @@ const Home = () => {
             if (isMount.current) {
                 const queryString = qs.stringify({
                     category,
-                    activeSort
+                    sort: activeSort
                 })
                 navigate(`?${queryString}`)
                 // setSceleton(true)

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setSearcValue } from '../../redux/HomeSlice'
 import styles from './Search.module.scss'
-const Search = ()=>{
+const Search:React.FC = ()=>{
     let [searchValue, changeSearchValue] = useState('')
-    const onChangeInput = (e)=>{
+    const onChangeInput = (e: any)=>{
         changeSearchValue(e.target.value)
         dispatch(setSearcValue(e.target.value))
     }
