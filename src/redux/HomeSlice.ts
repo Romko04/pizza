@@ -1,24 +1,38 @@
+import { RootState } from './store';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { PizzaItem } from "./CartSlice";
+type Args = [category:number, sort: string]
 export const fetchPizzas = createAsyncThunk(
     'homeSlice/fetchPizzas',
-    async (args) => {
+    async (args:Args) => {
         const [category, sort] = args
-        let res = await axios.get(`https://6401e590ab6b7399d0af0807.mockapi.io/items?category=${category === 0 ? '' : category}&sortBy=${sort}`)
+        let res = await axios.get<PizzaItem[]>(`https://6401e590ab6b7399d0af0807.mockapi.io/items?category=${category === 0 ? '' : category}&sortBy=${sort}`)
         return res.data
 
     }
 )
+interface HomeSlice {
+    pizzas: PizzaItem[],
+    category: number,
+    activeSort: string,
+    searchValue: string,
+    status: string,
+    sort: string,
+    loading: boolean,
+}
+const initialState: HomeSlice = {
+    pizzas: [],
+    category: 0,
+    activeSort: 'rating',
+    searchValue: '',
+    status: '',
+    sort: '',
+    loading: false
+}
 const homeSlice = createSlice({
     name: 'homeSlice',
-    initialState: {
-        pizzas: [],
-        category: 0,
-        activeSort: 'rating',
-        searchValue: '',
-        status: ''
-
-    },
+    initialState,
     reducers: {
         setPizzaz: (state, action) => {
             state.pizzas = action.payload
@@ -34,7 +48,7 @@ const homeSlice = createSlice({
         },
         setDescription: (state, action) => {
             state.category = Number(action.payload.category)
-            state.sort = action.payload.sort
+            state.sort = action.payload.sort        
         },
     },
     extraReducers: (builder) => {
@@ -58,6 +72,6 @@ const homeSlice = createSlice({
             })
     }
 })
-export const selectHome = (state) => state.home
+export const selectHome = (state: RootState) => state.home
 export const { setPizzaz, setCategory, setSort, setSearcValue, setDescription } = homeSlice.actions
 export default homeSlice.reducer

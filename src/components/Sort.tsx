@@ -34,7 +34,7 @@ const Sort: React.FC = ()=>{
         {keys.map((item,i)=> {
            return <li
             onClick={()=>{OnSortValue(item)}} 
-            className={i === activeSort? 'active':''} 
+            className={i === +activeSort? 'active':''} 
             key={i}>{sortValues[item]}
             </li>
           })}

@@ -1,14 +1,12 @@
-import { type } from "os";
 import React, { useState } from "react";
 import { useDispatch} from "react-redux";
-import { addItem } from "../../redux/CartSlice";
-type Prices = {
+import { addItem, PizzaItem } from "../../redux/CartSlice";
+export type Prices = {
   [categorie: string]: {
     [size:string]: number
   }
 }
-type PizzaProps = {id: number,prices: Prices, imageUrl:string, name:string, sizes: number[] }
-const Pizza: React.FC<PizzaProps> = ({ id,prices, imageUrl, name, sizes }) => {
+const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes }) => {
   let [sum, setSum] = useState(0)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
