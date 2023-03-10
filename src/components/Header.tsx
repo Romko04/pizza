@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from '../assets/img/pizza-logo.svg'
 import { selectCart } from "../redux/CartSlice";
 import Search from "./Search/Search";
 const Header: React.FC = ()=>{
-  let {count, totalPrice} = useSelector(selectCart)
+  let {items, count, totalPrice} = useSelector(selectCart)
+  useEffect(()=>{
+    localStorage.setItem('cart',JSON.stringify(items))
+  },[items])
     return(
         <div className="header">
         <div className="container">

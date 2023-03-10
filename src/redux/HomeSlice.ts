@@ -2,6 +2,7 @@ import { RootState } from './store';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { PizzaItem } from "./CartSlice";
+debugger
 type Args = [category:number, sort: string]
 export const fetchPizzas = createAsyncThunk(
     'homeSlice/fetchPizzas',
@@ -44,6 +45,9 @@ const homeSlice = createSlice({
             state.activeSort = action.payload
         },
         setSearcValue: (state, action) => {
+            state.searchValue = action.payload
+        },
+        setCount: (state, action) => {
             state.searchValue = action.payload
         },
         setDescription: (state, action) => {

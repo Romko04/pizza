@@ -6,12 +6,11 @@ export type Prices = {
     [size:string]: number
   }
 }
-const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes }) => {
-  let [sum, setSum] = useState(0)
+const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes, count }) => {
+  let [sum, setSum] = useState(count)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
   const categories: string[] = ['тонкое', 'традиционное']
-
   const dispatch = useDispatch()
   const changeSum = (i: any) => {
     setSum(sum + 1)
@@ -24,7 +23,7 @@ const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes }) => {
       sizes: sizes[activeSize],
       count: 1
     }
-    dispatch(addItem(item))
+    dispatch(addItem(item))  
   }
   return (
     <div className="pizza-block">

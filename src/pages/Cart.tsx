@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import CartBlock from "../components/Cartblock/CartBlock"
@@ -7,6 +8,11 @@ import EmtyCart from "./Empty-Cart"
 const Cart = ()=>{
   const dispatch = useDispatch()
   let {items,count,totalPrice} = useSelector(selectCart)
+  useEffect(()=>{
+    console.log(items);
+    
+    localStorage.setItem('cart',JSON.stringify(items))
+  },[items])
   const onClearItems =()=>{
     dispatch(clearItems())
   }
