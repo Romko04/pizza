@@ -9,7 +9,6 @@ import { fetchPizzas, selectHome, setDescription } from '../redux/HomeSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../redux/store';
 const Home:React.FC = () => {
-
     const navigate = useNavigate()
     let isMount = useRef(false)
     let isSearch = useRef(false)

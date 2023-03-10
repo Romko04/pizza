@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHome, setCategory } from "../redux/HomeSlice";
-const Categories: React.FC = ()=>{
+const Categories: React.FC = React.memo(()=>{  
   let activeIndex = useSelector(selectHome).category;
   let categories = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые',]
   const dispatch = useDispatch()
   const changeCategory = (value: number)=>{
     dispatch(setCategory(value))
   }
-    return(
+    return(     
       <div className="categories">
       <ul>
         {
@@ -17,5 +17,5 @@ const Categories: React.FC = ()=>{
       </ul>
     </div>
     )
-}
+})
 export default Categories

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHome, setSort } from "../redux/HomeSlice";
-const Sort: React.FC = ()=>{
+const Sort: React.FC = React.memo(()=>{
+  console.log('render');
+  
   let [isOpen, setIsOpen] = useState(false)
   let {activeSort} = useSelector(selectHome);
   type sortValue = {[key: string]: string}
@@ -43,5 +45,5 @@ const Sort: React.FC = ()=>{
       )}
     </div>
     )
-}
+})
 export default Sort
