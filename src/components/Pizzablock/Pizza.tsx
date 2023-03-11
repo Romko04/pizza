@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem, PizzaItem } from "../../redux/CartSlice";
 export type Prices = {
   [categorie: string]: {
-    [size:string]: number
+    [size: string]: number
   }
 }
-const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes, count }) => {
+const Pizza: React.FC<PizzaItem> = ({ id, prices, imageUrl, name, sizes, count }) => {
+  let json = localStorage.getItem('cart')
+   if (json) {
+    let cartItems = JSON.parse(json)
+    const isItem = cartItems.find(((p: PizzaItem) => p.id === id))
+    if (isItem) count = isItem.count
+   }
   let [sum, setSum] = useState(count)
   let [activeCategory, setActiveCategory] = useState(0)
   let [activeSize, setActiveSize] = useState(0)
-  const categories: string[] = ['тонкое', 'традиционное']
   const dispatch = useDispatch()
-  const changeSum = (i: any) => {
+  const categories: string[] = ['тонкое', 'традиционное']
+  const changeSum = () => {
     setSum(sum + 1)
     const item = {
       id,
@@ -23,7 +29,7 @@ const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes, count })
       sizes: sizes[activeSize],
       count: 1
     }
-    dispatch(addItem(item))  
+    dispatch(addItem(item))
   }
   return (
     <div className="pizza-block">
@@ -44,7 +50,7 @@ const Pizza: React.FC<PizzaItem> = ({ id,prices, imageUrl, name, sizes, count })
         <ul>
 
           {
-            sizes.map((item: any, i:number) => {
+            sizes.map((item: any, i: number) => {
               return <li
                 onClick={() => { setActiveSize(i) }}
                 className={i === activeSize ? 'active' : ''}

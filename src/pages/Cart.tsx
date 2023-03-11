@@ -9,8 +9,6 @@ const Cart = ()=>{
   const dispatch = useDispatch()
   let {items,count,totalPrice} = useSelector(selectCart)
   useEffect(()=>{
-    console.log(items);
-    
     localStorage.setItem('cart',JSON.stringify(items))
   },[items])
   const onClearItems =()=>{

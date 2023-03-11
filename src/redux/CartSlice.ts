@@ -1,10 +1,6 @@
 import { RootState } from './store';
 import { createSlice } from "@reduxjs/toolkit";
 import { Prices } from '../components/Pizzablock/Pizza';
-const getItems = (): PizzaItem[] => {
-    const json = localStorage.getItem('cart');
-    return json ? JSON.parse(json)&& console.log(JSON.parse(json)) : [];
-}
 export type PizzaItem = {
     id: number,
     name: string,
@@ -17,13 +13,11 @@ export type PizzaItem = {
 }
 interface InitialState {
     items:PizzaItem[],
-    itemsLC: PizzaItem[],
     count: number,
     totalPrice: number
 }
 const initialState:InitialState = {
     items: [],
-    itemsLC: getItems(),
     count: 0,
     totalPrice: 0
 }
