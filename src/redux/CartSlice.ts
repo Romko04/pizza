@@ -1,6 +1,11 @@
 import { RootState } from './store';
 import { createSlice } from "@reduxjs/toolkit";
 import { Prices } from '../components/Pizzablock/Pizza';
+const findItem = (items: PizzaItem[], payload: PizzaItem) => {
+    return items.find(item => {
+      return item.id === payload.id && item.categories === payload.categories && item.sizes === payload.sizes
+    })
+  }
 export type PizzaItem = {
     id: number,
     name: string,
@@ -26,9 +31,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addItem: (state, action) => {
-            let isItem = state.items.find(item => {
-                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes === action.payload.sizes
-            })
+            let isItem = findItem(state.items, action.payload)
             if (isItem) {
                 isItem.count++
                 state.count++
@@ -41,9 +44,7 @@ const cartSlice = createSlice({
 
         },
         plusItem: (state, action) => {
-            let isItem = state.items.find(item => {
-                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes === action.payload.sizes
-            })
+            let isItem = findItem(state.items, action.payload)
             if (isItem) {
                 isItem.count++
                 state.count++
@@ -52,9 +53,7 @@ const cartSlice = createSlice({
 
         },
         minusItem: (state, action) => {
-            let isItem = state.items.find(item => {
-                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes === action.payload.sizes
-            })
+            let isItem = findItem(state.items, action.payload)
             if (isItem) {
                 isItem.count--
                 state.count--
@@ -68,9 +67,7 @@ const cartSlice = createSlice({
             state.totalPrice = 0
         },
         removeItem: (state, action) => {
-            let isItem = state.items.find(item => {
-                return item.id === action.payload.id && item.categories === action.payload.categories && item.sizes === action.payload.sizes
-            })
+            let isItem = findItem(state.items, action.payload)
             if (isItem) {
                 state.count -= isItem.count
                 state.totalPrice -= (isItem.price * isItem.count)
