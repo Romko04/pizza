@@ -10,7 +10,7 @@ if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <Provider store={store}>
-      <BrowserRouter >
+      <BrowserRouter basename={process.env.PUBLIC_URL} >
         <App />
       </BrowserRouter>
     </Provider>
